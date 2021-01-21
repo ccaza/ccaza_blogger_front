@@ -36,7 +36,7 @@ function App() {
     <Router>
       <div>
         <Switch>
-          /*sensitive url区分大小写... */
+          {/* sensitive url区分大小写... */}
           <Route sensitive exact path="/">
             <Home />
           </Route>

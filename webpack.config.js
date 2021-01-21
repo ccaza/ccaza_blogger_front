@@ -32,6 +32,7 @@ module.exports = (env, options) => {
       //filename: "assets/js/app.[contenthash:4].bundle.js",
       chunkFilename: "assets/js/[name].[contenthash:4].chunk.js", //非入口(non-entry) chunk 文件的名称。
       publicPath: "/", //资源的基础路径，设置什么值就会在原来的路径前面加上这个值
+      // publicPath: "https://cdn.example.com/assets/",
     },
     performance: {
       hints: "warning", // 枚举
