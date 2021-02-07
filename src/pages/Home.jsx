@@ -16,6 +16,7 @@ function xx(setCount) {
 export default function Home() {
   const [count, setCount] = useState("");
   useEffect(() => {
+    window.document.title = "首页";
     if (count === "") {
       xx(setCount);
     }
