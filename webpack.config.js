@@ -114,7 +114,7 @@ module.exports = (env, options) => {
       inline: true, //设置为true，当源文件改变时会自动刷新页面
       hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
       host: "127.0.0.1",
-      port: 8080, //设置默认监听端口，如果省略，默认为"8080"
+      port: 8081, //设置默认监听端口，如果省略，默认为"8080"
     },
     resolve: {
       extensions: [".ts", ".js"],
