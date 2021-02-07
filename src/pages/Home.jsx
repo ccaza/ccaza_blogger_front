@@ -10,8 +10,7 @@ function xx(setCount) {
       setCount(response.data);
     })
     .catch(function (error) {
-      // handle error
-      console.log(error);
+      setCount(0);
     });
 }
 export default function Home() {
@@ -25,7 +24,7 @@ export default function Home() {
     <Router>
       <div>
         <Header />
-        <h2>这是Home页面 {count} </h2>
+        <h2>当前已有用户 {count} </h2>
       </div>
     </Router>
   );
