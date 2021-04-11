@@ -26,11 +26,11 @@ module.exports = (env, options) => {
       path: path.resolve(__dirname, "build"), //打包后的js文件存放的地方
       filename: (pathData) => {
         return pathData.chunk.name === "main" //打包后的js文件名
-          ? "assets/js/app.[contenthash:4].js"
-          : "assets/js/[name].[contenthash:4].js";
+          ? "assets/js/chunk-app-[contenthash:4].js"
+          : "assets/js/chunk-[name]-[contenthash:4].js";
       },
       //filename: "assets/js/app.[contenthash:4].bundle.js",
-      chunkFilename: "assets/js/[name].[contenthash:4].chunk.js", //非入口(non-entry) chunk 文件的名称。
+      chunkFilename: "assets/js/chunk-[name]-[contenthash:4].js", //非入口(non-entry) chunk 文件的名称。
       publicPath: "/", //资源的基础路径，设置什么值就会在原来的路径前面加上这个值
       // publicPath: "https://cdn.example.com/assets/",
     },
@@ -100,7 +100,7 @@ module.exports = (env, options) => {
             chunks: "initial", // 抽离自己写的公共代码，common这个名字可以随意起
             minChunks: 1,
             priority: -20,
-            minSize: 30000, // 只要超出0字节就生成一个新包
+            minSize: 300000, // 只要超出300000字节就生成一个新包
             reuseExistingChunk: true,
           },
         },
@@ -121,8 +121,8 @@ module.exports = (env, options) => {
     plugins: [
       options.mode === "development"
         ? new webpack.SourceMapDevToolPlugin({
-          filename: "assets/js/[name].[contenthash:4].js.map",
-          exclude: ["assets/js/app.[contenthash:4].js"],
+          filename: "assets/js/chunk-[name].[contenthash:4].js.map",
+          exclude: ["assets/js/chunk-app-[contenthash:4].js"],
         })
         : function () {
           console.log("不生成map文件");
@@ -137,17 +137,17 @@ module.exports = (env, options) => {
               compact: true, //压缩代码
               // controlFlowFlattening: true, //是否启用控制流扁平化(降低1.5倍的运行速度)
               // controlFlowFlatteningThreshold: 0.111, //应用概率;在较大的代码库中，建议降低此值，因为大量的控制流转换可能会增加代码的大小并降低代码的速度。
-              // deadCodeInjection: true, //随机的死代码块(增加了混淆代码的大小)
+              deadCodeInjection: true, //随机的死代码块(增加了混淆代码的大小)
               // deadCodeInjectionThreshold: 0.4, //死代码块的影响概率
               // debugProtection: false, //此选项几乎不可能使用开发者工具的控制台选项卡
-              // debugProtectionInterval: false, //如果选中，则会在“控制台”选项卡上使用间隔强制调试模式，从而更难使用“开发人员工具”的其他功能。
+              debugProtectionInterval: true, //如果选中，则会在“控制台”选项卡上使用间隔强制调试模式，从而更难使用“开发人员工具”的其他功能。
               // disableConsoleOutput: true, //通过用空函数替换它们来禁用console.log，console.info，console.error和console.warn。这使得调试器的使用更加困难。
-              // identifierNamesGenerator: "hexadecimal", //标识符的混淆方式 hexadecimal(十六进制) mangled(短标识符)
+              identifierNamesGenerator: "hexadecimal", //标识符的混淆方式 hexadecimal(十六进制) mangled(短标识符)
               // log: false,
               renameGlobals: true, //是否启用全局变量和函数名称的混淆
               rotateStringArray: true, //通过固定和随机（在代码混淆时生成）的位置移动数组。这使得将删除的字符串的顺序与其原始位置相匹配变得更加困难。如果原始源代码不小，建议使用此选项，因为辅助函数可以引起注意。
-              // selfDefending: true, //混淆后的代码,不能使用代码美化,同时需要配置 cpmpat:true;
-              // stringArray: true, //删除字符串文字并将它们放在一个特殊的数组中
+              selfDefending: true, //混淆后的代码,不能使用代码美化,同时需要配置 cpmpat:true;
+              stringArray: true, //删除字符串文字并将它们放在一个特殊的数组中
               // stringArrayThreshold: 0.75,
               // transformObjectKeys: true,
               // unicodeEscapeSequence: false, //允许启用/禁用字符串转换为unicode转义序列。Unicode转义序列大大增加了代码大小，并且可以轻松地将字符串恢复为原始视图。建议仅对小型源代码启用此选项。
@@ -182,8 +182,12 @@ module.exports = (env, options) => {
       new MiniCssExtractPlugin({
         //css加载
         // 类似 webpackOptions.output里面的配置 可以忽略
-        filename: "assets/css/[name]-[contenthash:4].css",
-        chunkFilename: "assets/css/[id]-[contenthash:4].css",
+        filename: (pathData) => {
+          return pathData.chunk.name === "main" //打包后的js文件名
+            ? "assets/css/app-[contenthash:4].css"
+            : "assets/css/[name]-[contenthash:4].css";
+        },
+        chunkFilename: "assets/css/[name]-[contenthash:4].css", //非入口(non-entry) chunk 文件的名称。
       }),
       // 自动加载类库
       //webpack配置ProvidePlugin后，在使用时将不再需要import和require进行引入，直接使用即可。
