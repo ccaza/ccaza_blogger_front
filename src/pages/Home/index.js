@@ -1,10 +1,10 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import Header from "../../components/Header";
-const axios = require("axios").default;
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+const axios = require("axios").default;
 
-import "./index.scss";
-
+import Header from "../../components/Header";
+import Footer from "../Footer";
+import styles from "./Home.module.scss";
 
 function xx(setCount) {
 	axios
@@ -25,14 +25,30 @@ export default function Home() {
 		}
 	});
 	return (
-		<Router>
-			<div>
-				<Header />
-				<div className="border">
-					.border
-				</div>
-				<h2>我我我我 {count} </h2>
+		<React.Fragment >
+			<Header />
+			<div className="notification is-primary">
+				This container is <strong>centered</strong> on desktop and larger viewports.
 			</div>
-		</Router>
+			<section className={`${styles.body} section is-large is-link`}>
+				<h1 className="title">Section</h1>
+				<h2 className="subtitle">
+					A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading.
+				</h2>
+			</section>
+
+			<section class="hero">
+				<div class="hero-body">
+					<p class="title">
+						Hero title
+					</p>
+					<p class="subtitle">
+						Hero subtitle
+					</p>
+				</div>
+			</section>
+
+			<Footer></Footer>
+		</React.Fragment>
 	);
 }

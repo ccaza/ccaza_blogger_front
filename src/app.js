@@ -28,8 +28,8 @@ function NoMatch() {
 
 export default function App() {
   return (
-    <Router>
-      <div>
+    <React.Fragment>
+      <Router>
         <Switch>
           {/* sensitive url区分大小写... */}
           <Route sensitive exact path="/">
@@ -43,7 +43,7 @@ export default function App() {
             <NoMatch />
           </Route>
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </React.Fragment>
   );
 }
