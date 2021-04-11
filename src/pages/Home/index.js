@@ -3,6 +3,9 @@ import Header from "../../components/Header";
 const axios = require("axios").default;
 import React, { useState, useEffect } from "react";
 
+import "./index.scss";
+
+
 function xx(setCount) {
 	axios
 		.get("http://127.0.0.1:8080/")
@@ -25,6 +28,9 @@ export default function Home() {
 		<Router>
 			<div>
 				<Header />
+				<div className="border">
+					.border
+				</div>
 				<h2>我我我我 {count} </h2>
 			</div>
 		</Router>

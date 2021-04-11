@@ -7,7 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin"); //压缩代码
 const path = require("path"); // 处理文件路径的标准库
 const webpack = require("webpack");
 
-const OpenJavaScriptObfuscator = false;
+const OpenJavaScriptObfuscator = true;
 
 //__dirname是node.js中的一个全局变量，它指向当前执行脚本所在的目录
 module.exports = (env, options) => {
@@ -20,7 +20,7 @@ module.exports = (env, options) => {
     devtool: false, //使用source-map-dev-tool-plugin
     //注意这里是exports不是export
     // entry: ['webpack/hot/dev-server', __dirname + '/src/main.js'],
-    entry: [__dirname + "/src/app.js"],
+    entry: [__dirname + "/src/main.js"],
     output: {
       //输出目录
       path: path.resolve(__dirname, "build"), //打包后的js文件存放的地方
@@ -55,7 +55,6 @@ module.exports = (env, options) => {
           return true;
         }
       })(),
-
       minimizer: [
         (function () {
           if (options.mode === "development") {
@@ -165,7 +164,7 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
         // title: "My App",
         filename: "index.html",
-        template: __dirname + "/src/index.html",
+        template: __dirname + "/public/index.html",
         inject: true, //设置为true插入的元素放入body元素的底部
         hash: false, //开启hash  ?[hash]
         minify:
@@ -208,18 +207,35 @@ module.exports = (env, options) => {
         },
         // css编码与提取
         {
-          test: /\.(sa|sc|c)ss$/,
+          test: /\.s[ac]ss$/i,
           use: [
             MiniCssExtractPlugin.loader,
-            "css-loader",
-            "sass-loader",
-            "postcss-loader",
+            // 将 CSS 转化成 CommonJS 模块
+            {
+              loader: "css-loader",
+            }, {
+              loader: "postcss-loader",
+              options: {
+                postcssOptions: {
+                  plugins: [
+                    [
+                      "autoprefixer",
+                    ]
+                  ]
+                }
+              }
+            },
+            // 将 Sass 编译成 CSS
+            {
+              loader: 'sass-loader'
+            }
           ],
         },
         // 图片内联与编码
         {
           // 小于1KB的图片使用base64内联
-          test: /\.(png|jpg|webp)$/,
+          test: /\.(png|jpg|gif|svg|css|eot|ttf)$/,
+
           use: [
             {
               loader: "url-loader", // or url-loader
@@ -233,10 +249,11 @@ module.exports = (env, options) => {
         },
         {
           // 字体文件
-          test: /\.(ttf|eot|woff|woff2|svg)$/,
+          test: /\.(svg|eot|ttf|woff|woff2)$/,
+
           use: [
             {
-              loader: "file-loader", // or url-loader
+              loader: "url-loader", // or url-loader
               options: {
                 name: "assets/fonts/[name]-[contenthash:4].[ext]",
               },

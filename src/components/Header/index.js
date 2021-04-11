@@ -5,7 +5,7 @@ const React = require("react");
 export default function Header(xx) {
 	return (
 		<div>
-			<h1>萨达所大所多 </h1>
+			<h1>这尼玛是一个header ... </h1>
 		</div>
 	);
 }
