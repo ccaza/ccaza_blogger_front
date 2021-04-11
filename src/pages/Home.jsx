@@ -25,7 +25,7 @@ export default function Home() {
     <Router>
       <div>
         <Header />
-        <h2>当前已有用户 {count} </h2>
+        <h2>我我我我 {count} </h2>
       </div>
     </Router>
   );

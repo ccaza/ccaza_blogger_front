@@ -7,7 +7,7 @@ export default function About() {
     <Router>
       <div>
         <Header />
-        <h2>这是About页面</h2>
+        <h2>牛皮...</h2>
       </div>
     </Router>
   );
