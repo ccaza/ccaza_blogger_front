@@ -1,1 +1,1 @@
-"# spa template"
+# spa template

@@ -20,7 +20,7 @@ module.exports = (env, options) => {
     devtool: false, //使用source-map-dev-tool-plugin
     //注意这里是exports不是export
     // entry: ['webpack/hot/dev-server', __dirname + '/src/main.js'],
-    entry: [__dirname + "/src/app.jsx"],
+    entry: [__dirname + "/src/app.js"],
     output: {
       //输出目录
       path: path.resolve(__dirname, "build"), //打包后的js文件存放的地方
@@ -122,12 +122,12 @@ module.exports = (env, options) => {
     plugins: [
       options.mode === "development"
         ? new webpack.SourceMapDevToolPlugin({
-            filename: "assets/js/[name].[contenthash:4].js.map",
-            exclude: ["assets/js/app.[contenthash:4].js"],
-          })
+          filename: "assets/js/[name].[contenthash:4].js.map",
+          exclude: ["assets/js/app.[contenthash:4].js"],
+        })
         : function () {
-            console.log("不生成map文件");
-          },
+          console.log("不生成map文件");
+        },
       (function () {
         if (
           options.mode !== "development" &&
@@ -172,10 +172,10 @@ module.exports = (env, options) => {
           options.mode === "development"
             ? false
             : {
-                removeComments: true, //移除HTML中的注释
-                collapseWhitespace: true, //折叠空白区域 也就是压缩代码
-                removeAttributeQuotes: true, //去除属性引用
-              },
+              removeComments: true, //移除HTML中的注释
+              collapseWhitespace: true, //折叠空白区域 也就是压缩代码
+              removeAttributeQuotes: true, //去除属性引用
+            },
       }),
       new CleanWebpackPlugin(), // 自动清理
       new webpack.HotModuleReplacementPlugin(), //热模块替换插件

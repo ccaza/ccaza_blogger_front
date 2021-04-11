@@ -1,5 +1,4 @@
-const React = require("react");
-
+import React from "react";
 /*
 react-router: 实现了路由的核心功能
 react-router-dom: 基于react-router，加入了在浏览器运行环境下的一些功能，
@@ -7,7 +6,7 @@ react-router-dom: 基于react-router，加入了在浏览器运行环境下的�
 前者使用pushState和popState事件构建路由，后者使用window.location.hash和hashchange事件构建路由。
 react-router-native: 基于react-router，类似react-router-dom，加入了react-native运行环境下的一些功能。
 */
-const ReactDOM = require("react-dom");
+import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,8 +16,8 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
+import Home from "./pages/Home";
+import About from "./pages/About";
 
 function NoMatch() {
   let location = useLocation();
